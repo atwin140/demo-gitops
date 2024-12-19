@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sharkapp
+  name: sharkapp-dev
   namespace: argocd
 spec:
   project: default
@@ -12,7 +12,7 @@ spec:
     path: sharkapp/overlays/dev
   destination: 
     server: https://kubernetes.default.svc
-    namespace: sharkapp
+    namespace: sharkapp-dev
 
   syncPolicy:
     syncOptions:
