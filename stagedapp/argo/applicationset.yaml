@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-applications
+  namespace: argocd
+spec:
+  generators:
+    list:
+      elements:
+        - name: database
+          path: db
+          wave: 0
+        - name: nginx
+          path: app
+          wave: 1
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/atwin140/demo-gitops.git'
+        targetRevision: dev
+        path: 'stageapp/{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: demo
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
